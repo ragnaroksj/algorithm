@@ -9,16 +9,6 @@ function FirstReverse(str) {
 }
 --------------------------------------
 
-阶乘
-FirstFactorial
-function FirstFactorial(num) {
-  if(num == 0){
-    return 1;
-  } else {
-    return num * FirstFactorial(num--);
-  }
-}
---------------------------------------
 
 Input = "fun&!! time"Output = "time"
 Input = "I love dogs"Output = "love" 
@@ -545,22 +535,7 @@ function ThirdGreatest(strArr) {
   return strArr[2];
 }
 
-----------------------------------------------------------------------------------
 
-Power of 2
-function PowersofTwo(num) { 
-  if( num == 1) return true;
-  else if( num < 1) return false;
-  else return PowersofTwo(num/2);         
-}
-
-or 
-
-function PowersofTwo(num) { 
-  return (num != 0) && ((num & (num - 1)) == 0);     
-}
-
-----------------------------------------------------------------------------------
 数组任意n个值相加是否等于数组最大值
 i>>j&1： 101 表示最后循环拿数组中第一位和第三位的值相加
 
