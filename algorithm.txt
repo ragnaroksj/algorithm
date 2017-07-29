@@ -1863,47 +1863,6 @@ if( hash[nums[i]] > Math.floor(nums.length/2) ) return nums[i];
 
 };
 
-Delete Node in a Linked List
-/**
-* Definition for singly-linked list.
-* function ListNode(val) {
-* this.val = val;
-* this.next = null;
-* }
-*/
-/**
-* @param {ListNode} node
-* @return {void} Do not return anything, modify node in-place instead.
-*/
-var deleteNode = function(node) {
-var tmp = node.next;
-node.val = node.next.val;
-node.next = node.next.next;
-};
-same tree
-/**
-* Definition for a binary tree node.
-* function TreeNode(val) {
-* this.val = val;
-* this.left = this.right = null;
-* }
-*/
-/**
-* @param {TreeNode} p
-* @param {TreeNode} q
-* @return {boolean}
-*/
-var isSameTree = function(p, q) {
-if( !p && !q ) return true;
-else if( (p && !q) || (!p && q) ) return false;
-else{
-if( p.val !== q.val ){
-return false;
-}else{
-return isSameTree(p.left,q.left) && isSameTree(p.right,q.right);
-}
-}
-};
 
 Given an array nums, write a function to move all 0's to the end of it while maintaining the relative order of the non-zero elements.
 For example, given nums = [0, 1, 0, 3, 12], after calling your function, nums should be [1, 3, 12, 0, 0].
@@ -2125,33 +2084,6 @@ var isMovingWord = function(s, t) {
     return false;
 };
 
-回文
-/**
- * @param {string} s
- * @param {string} t
- * @return {boolean}
- */
-var isAnagram = function(s, t) {
-    if( s.length !== t.length) return false;
-    var hashS = [];
-    var hashT = [];
-    for( var i = 0; i < s.length ; i++){
-        if( hashS[s[i]] === undefined ) hashS[s[i]] = 1;
-        else hashS[s[i]]++;
-        
-        if( hashT[t[i]] === undefined ) hashT[t[i]] = 1;
-        else hashT[t[i]]++;
-    }
-    
-    if( hashS.length !== hashT.length ) return false; 
-    
-    for( var j in hashS ){
-        if( hashT[j] === undefined ) return false;
-        if ( hashS[j] !== hashT[j] ) return false;
-    }
-    
-    return true;
-}
 
 Major elements
 Given an array of size n, find the majority element. The majority element is the element that appears more than ⌊ n/2 ⌋ times.
@@ -2171,36 +2103,6 @@ var majorityElement = function(nums) {
 };
 
 Roman to Integer
-Given a roman numeral, convert it to an integer.
-Input is guaranteed to be within the range from 1 to 3999.
-/**
- * @param {string} s
- * @return {number}
- */
-var romanToInt = function(s) {
-     var a ={
-        "M" : 1000,
-        "D" : 500,
-        "C" : 100,
-        "L" : 50,
-        "X" : 10,
-        "V" : 5,
-        "I" : 1
-     };
-     
-     var result = a[s[0]], lastNum = a[s[0]];
-     
-     for( var i = 1; i < s.length; i++){
-        if( a[s[i]] <= lastNum ){
-            result += a[s[i]];
-        }else{
-            result = result - 2*lastNum + a[s[i]];
-        }
-        lastNum = a[s[i]];
-     }
-     
-     return result;
-}
 
 Integer to Roman
 Given an integer, convert it to a roman numeral.
@@ -2228,33 +2130,6 @@ var intToRoman = function(num) {
 };
 
 
-Reverse Linked List
-/**
- * Definition for singly-linked list.
- * function ListNode(val) {
- *     this.val = val;
- *     this.next = null;
- * }
- */
-/**
- * @param {ListNode} head
- * @return {ListNode}
- */
-var reverseList = function(head) {
-    if( head === [] ) return [];
-    
-   var node = head;
-   var previous = null;
-   
-   while( node ){
-       var tmp = node.next;
-       node.next = previous;
-       previous = node;
-       node = tmp;
-   }
-   
-   return previous;
-};
 
 Remove Duplicates from Sorted List
 Given a sorted linked list, delete all duplicates such that each element appear only once.
@@ -3824,55 +3699,6 @@ var myAtoi = function(str) {
 };
 
 
-Binary Tree Paths
- Given a binary tree, return all root-to-leaf paths.
-
-For example, given the following binary tree:
-
-   1
- /   \
-2     3
- \
-  5
-
-All root-to-leaf paths are:
-
-["1->2->5", "1->3"]
-/**
- * Definition for a binary tree node.
- * function TreeNode(val) {
- *     this.val = val;
- *     this.left = this.right = null;
- * }
- */
-/**
- * @param {TreeNode} root
- * @return {string[]}
- */
-var binaryTreePaths = function(root) {
-    var res = [];
-    if( root !== null ) traverse(root, root.val.toString());
-    return res;
-    
-    function traverse(node, path){
-        var isLeaf = true;
-        
-        if( node.left ){
-            isLeaf = false;
-            traverse( node.left, path + "->" + node.left.val );
-        }
-        
-        if( node.right ){
-            isLeaf = false;
-            traverse( node.right, path + "->" + node.right.val );
-        }
-        
-        if( isLeaf ){
-            res.push( path );
-        }
-    }
-};
-
 
 Binary Tree Level Order Traversal
 
@@ -4211,32 +4037,6 @@ var productExceptSelf = function(nums) {
 };
 
 
-
-Missing number
- Given an array containing n distinct numbers taken from 0, 1, 2, ..., n, find the one that is missing from the array.
-
-For example,
-Given nums = [0, 1, 3] return 2. 
-/**
- * @param {number[]} nums
- * @return {number}
- */
-var missingNumber = function(nums) {
-    
-    /*var res = 0;
-    for( var i  = 0; i < nums.length; i++ ){
-       res ^= (i+1) ^ nums[i];
-    }
-    return res;*/
-    
-    var sum = 0, n = nums.length;
-    for( var i  = 0; i < nums.lenght; i++){
-        sum += nums[i];
-    }
-    
-    return 0.5*n*(n+1)-sum;
-    
-};
 
 Container With Most Water
 前后指针， 值小的是瓶颈所以移动值小的
