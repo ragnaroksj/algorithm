@@ -1774,29 +1774,6 @@ return Math.max(maxDepth(root.left)+1, maxDepth(root.right)+1);
 };
 
 
-remove Element:
-给定一个数移除数组中该数返回新长度
-/**
-* @param {number[]} nums
-* @param {number} val
-* @return {number}
-*/
-var removeElement = function(nums, val) {
-var j = nums.length, i = 0;
-while( i < j ){
-if( nums[i] === val ){
-nums[i] = nums[j-1];
-nums[j-1] = val;
-nums.pop();
-j--;
-}else{
-i++;
-}
-}
-
-return j;
-};
-
 —————————————————-
 remove Nth Node From End of List
 /**
@@ -1971,78 +1948,6 @@ var titleToNumber = function(s) {
 
 
 http://karlma8812.github.io/algorithm/2014/09/07/BinaryTreeAlgorithm.html 二叉树面试题
-Lowest Common Ancestor of a Binary Search Tree
- Given a binary search tree (BST), find the lowest common ancestor (LCA) of two given nodes in the BST.
-
-According to the definition of LCA on Wikipedia: “The lowest common ancestor is defined between two nodes v and w as the lowest node in T that has both v and w as descendants (where we allow a node to be a descendant of itself).”
-
-        _______6______
-       /              \
-    ___2__          ___8__
-   /      \        /      \
-   0      _4       7       9
-         /  \
-         3   5
-
-For example, the lowest common ancestor (LCA) of nodes 2 and 8 is 6. Another example is LCA of nodes 2 and 4 is 2, since a node can be a descendant of itself according to the LCA definition.
-/**
- * Definition for a binary tree node.
- * function TreeNode(val) {
- *     this.val = val;
- *     this.left = this.right = null;
- * }
- */
-/**
- * @param {TreeNode} root
- * @param {TreeNode} p
- * @param {TreeNode} q
- * @return {TreeNode}
- */
-var lowestCommonAncestor = function(root, p, q) {
-    if( root === null || p === null || q === null ) return [];
-    if( root === p || root === q ) return root;
-    var pPath = [], qPath = [];
-    
-    if( !(getNodePath(root, p, pPath) && getNodePath(root, q, qPath))  ){
-        return [];
-    }
-    
-    
-    var lastCommonPath = root;
-    while( pPath.length && qPath.length ){
-        var lastPPath = pPath.shift();
-        var lastQPath = qPath.shift();
-        if( lastPPath === lastQPath ) {
-            lastCommonPath = lastPPath;
-        }else{
-            return lastCommonPath;
-        } 
-    }
-    
-    return lastcommonPath;
-    
-}
-
-function getNodePath(t, node, pathArray){
-    if( t === null || node === null) return false;
-    
-    if( t === node ){
-        pathArray.push( t );
-        return true;
-    }
-    
-    var found = false;
-    pathArray.push( t );
-    found = getNodePath(t.left, node, pathArray);
-    if( !found ){
-        found = getNodePath(t.right, node, pathArray);
-    }
-    if( !found ){
-        pathArray.pop();
-    }
-    
-    return found;
-}
 
 Write a function that takes an unsigned integer and returns the number of ’1' bits it has (also known as the Hamming weight).
 
@@ -2358,44 +2263,6 @@ a
 Merge Two Sorted Lists 
 
 Merge two sorted linked lists and return it as a new list. The new list should be made by splicing together the nodes of the first two lists.
-/**
- * Definition for singly-linked list.
- * function ListNode(val) {
- *     this.val = val;
- *     this.next = null;
- * }
- */
-/**
- * @param {ListNode} l1
- * @param {ListNode} l2
- * @return {ListNode}
- */
-var mergeTwoLists = function(l1, l2) {
-    if( l1 === null ) return l2;
-    if( l2 === null ) return l1;
-    if( l1 === null && l2 === null ) return null;
-    
-    var head = new ListNode(0);
-    var newList = head;
-    var temp = null;
-    
-    while( l1 !== null && l2 !== null ){
-        if( l1.val <= l2.val ){
-            temp = l1;
-            l1 = l1.next;
-        }else{
-            temp = l2;
-            l2 = l2.next;
-        }
-        
-        newList.next = temp;
-        newList = newList.next;
-    }
-    
-    newList.next = l1 === null ? l2 : l1;
-    return head.next;
-};
-
 
 Balanced Binary Tree
 Given a binary tree, determine if it is height-balanced.
@@ -2426,43 +2293,6 @@ var getHeight = function(node){
     return Math.max( getHeight(node.left)+1, getHeight(node.right)+1 ) ;
 }
 
-Symmetric Tree
-
-非递归解法：按层遍历，每一层检查一下是否对称。
-
-递归解法：
-
-其中左子树和右子树对称的条件：
-
-    两个节点值相等，或者都为空
-    左节点的左子树和右节点的右子树对称
-    左节点的右子树和右节点的左子树对称
-
-/**
- * Definition for a binary tree node.
- * function TreeNode(val) {
- *     this.val = val;
- *     this.left = this.right = null;
- * }
- */
-/**
- * @param {TreeNode} root
- * @return {boolean}
- */
-var isSymmetric = function(root) {
-    if( root === null ) return true;
-    return isSym(root.left, root.right);
-    
-};
-
-var isSym = function(leftNode, rightNode){
-    if( leftNode === null) return rightNode === null;
-    if( rightNode === null ) return leftNode === null;
-    if( leftNode.val !== rightNode.val ) return false;
-    if( !isSym(leftNode.left, rightNode.right) ) return false;
-    if( !isSym(leftNode.right, rightNode.left) ) return false;
-    return true
-}
 
 Remove Duplicates from Sorted Array
  Given a sorted array, remove the duplicates in place such that each element appear only once and return the new length.
@@ -2724,34 +2554,6 @@ var generate = function(numRows) {
     return tri;
 };
 
-plus one:
-[1,4,5,3] -> [1,4,5,4]
-[9,9,9,9] -> [1,0,0,0,0]
-
-/**
- * @param {number[]} digits
- * @return {number[]}
- */
-var plusOne = function(digits) {
-    var i = digits.length - 1;
-    var carry = 1;
-    while( i >= 0 && carry ){
-        if( digits[i] === 9 ){
-            carry = 1;
-            digits[i] = 0;
-        }else{
-            digits[i] += 1;
-            carry = 0;
-        } 
-        i--;
-    }
-    
-    if( carry === 1 ){
-        digits.unshift(1);
-    }
-    
-    return digits;
-};
 
 Summary Ranges
 Given a sorted integer array without duplicates, return the summary of its ranges.
