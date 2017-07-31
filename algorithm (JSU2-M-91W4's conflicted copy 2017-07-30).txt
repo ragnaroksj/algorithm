@@ -2131,44 +2131,6 @@ var intToRoman = function(num) {
 
 
 
-Remove Duplicates from Sorted List
-Given a sorted linked list, delete all duplicates such that each element appear only once.
-
-For example,
-Given 1->1->2, return 1->2.
-Given 1->1->2->3->3, return 1->2->3.
-/**
- * Definition for singly-linked list.
- * function ListNode(val) {
- *     this.val = val;
- *     this.next = null;
- * }
- */
-/**
- * @param {ListNode} head
- * @return {ListNode}
- */
-var deleteDuplicates = function(head) {
-    if( head === null ) return [];
-    
-    var node = head, prev = null, hash = {};
-    
-    while( node ){
-        if( hash[node.val+"a"] === undefined ) {
-            hash[node.val+"a"] = 1;
-            prev = node;
-            node = node.next;
-        }else{
-            prev.next = node.next;
-            node = node.next;
-        }
-    }
-    
-    return head;
-    
-};
-
-
 Remove Duplicates from Sorted List II
  Given a sorted linked list, delete all nodes that have duplicate numbers, leaving only distinct numbers from the original list.
 
@@ -2218,47 +2180,6 @@ You are climbing a stair case. It takes n steps to reach to the top.
 
 Each time you can either climb 1 or 2 steps. In how many distinct ways can you climb to the top?
 斐波纳钦数列
-/**
- * @param {number} n
- * @return {number}
- */
-var climbStairs = function(n) {
-   /* if( n === 0 ) return 0;
-    if( n === 1 ) return 1;
-    return climbStairs( n-1 ) + climbStairs( n-2 );*/
-    
-    var current = 1, last = 0;
-    for(var i = 0; i < n; i++ ){
-        var tmp = current;
-        current += last;
-        last = tmp;
-    }
-    
-    return current;
-};
-
-isHappyNumber
-/**
- * @param {number} n
- * @return {boolean}
- */
-var isHappy = function(n) {
-    var numsArray = [];
-    var result = 0;
-    while( true ){
-        if( n === 1) return true;
-        result = 0;
-        var nA = n.toString().split("");
-        for( var i = 0; i < nA.length; i++ ){
-            result += Math.pow(parseInt(nA[i]),2);
-        }
-        
-        if( numsArray.indexOf( result ) !== -1) return false;
-        numsArray.push( result );
-        n = result;
-    }
-};
-
 
 从前向后遍历罗马数字，如果某个数比前一个数小，则加上该数。反之，减去前一个数的两倍然后加上该数   
     /**
@@ -2374,30 +2295,6 @@ function isPrime(n){
 	}
 	return true;
 }
-
-
-丑数
-丑数只能被2、3和5整除。也就是说如果一个数如果它能被2整除，我们把它连续除以2；如果能被3整除，就连续除以3；如果能被5整除，就除以连续5。如果最后我们得到的是1，那么这个数就是丑数，否则不是。
-/**
- * @param {number} num
- * @return {boolean}
- */
-var isUgly = function(num) {
-    if( num === 0 ) return false;
-    
-    while( num%2 === 0 ){
-        num /= 2;
-    }
-    while( num%3 === 0 ){
-        num /= 3;
-    }
-    while( num%5 === 0){
-        num /= 5;
-    }
-    
-    if( num === 1 ) return true;
-    return false;
-};
 
 
 利用stack实现队列mplement Queue using Stacks
