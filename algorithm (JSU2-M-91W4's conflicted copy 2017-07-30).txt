@@ -1661,47 +1661,6 @@ return x > 0 ? rev : -rev;
 
 
 
-
-integer is a palindrome
-/**
-* @param {number} x
-* @return {boolean}
-*/
-var isPalindrome = function(x) {
-if( x < 0 ) return false;
-var y = x, rev = 0;
-while( y !== 0){
-rev = rev*10 + y%10;
-y = Math.floor(y/10);
-}
-return rev === x ? true : false;
-};
-
-
-Valid Parentheses
-/**
-* @param {string} s
-* @return {boolean}
-*/
-var isValid = function(s) {
-var stack = [];
-for( var i = 0; i < s.length; i++){
-if( s[i] === "(" || s[i] === "{" || s[i] === "[" ){
-stack.push(s[i]);
-}else if( s[i] === ")" && stack.pop() !== "(" ){
-return false;
-}else if( s[i] === "}" && stack.pop() !== "{" ){
-return false;
-}else if( s[i] === "]" && stack.pop() !== "[" ){
-return false;
-}
-}
-
-return !stack.length;
-};
-
-
-
 zigzag:
 convert("PAYPALISHIRING", 3) should return "PAHNAPLSIIGYIR".
 /**
@@ -1814,15 +1773,6 @@ return cache[0];
 
 };
 
-Implement srtStr()
-/**
-* @param {string} haystack
-* @param {string} needle
-* @return {number}
-*/
-var strStr = function(haystack, needle) {
-return haystack.indexOf(needle);
-};
 
 Majority number:出现次数>n/2
 /**
@@ -2202,61 +2152,6 @@ function isPrime(n){
 }
 
 
-利用stack实现队列mplement Queue using Stacks
-/**
- * @constructor
- */
-var Queue = function() {
-    this.stack = [];
-};
-
-/**
- * @param {number} x
- * @returns {void}
- */
-Queue.prototype.push = function(x) {
-    this.stack.push(x);
-    return null;
-};
-
-/**
- * @returns {void}
- */
-Queue.prototype.pop = function() {
-    if( Queue.empty ) return null;
-    var popN = this.stack[0];
-    for( var i = 1; i < this.stack.length; i++ ){
-        this.stack[i-1] = this.stack[i];
-    }
-    this.stack[this.stack.length-1] = popN;
-    this.stack.pop();
-    return null;
-};
-
-/**
- * @returns {number}
- */
-Queue.prototype.peek = function() {
-    if( Queue.empty ) return null;
-    return this.stack[0];
-};
-
-/**
- * @returns {boolean}
- */
-Queue.prototype.empty = function() {
-    return !this.stack.length;
-};
-
-
-var a = new Queue();
-a.push(1);
-a.push(2);
-a.push(5);
-a.push(6);
-a.push(8);
-a.pop();
-a
 
 
 
@@ -2325,147 +2220,6 @@ var removeDuplicates = function(nums) {
 
 removeDuplicates([1,1,1,2,2,3]);
 
-countPrime
-/**
- * @param {number} n
- * @return {number}
- */
-var countPrimes = function(n) {
-  if( n <= 2 ) return 0;
-  var count = 0;
-  for(  var i  = 2; i <= (n-1) ; i++ ){
-    if( isPrime(i) ) count++;
-  }
-  return count;
-}
-
-
-Count the number of prime numbers less than a non-negative number, n.
-function isPrime(n){
-    if( n < 2 ) return false;
-  for( var i = 2; i*i<=n; i++){
-    if( n%i === 0 ) return false;
-  }
-  return true;
-}
-
-Merge Sorted Array
-Total Accepted: 74443 Total Submissions: 254590 Difficulty: Easy
-
-Given two sorted integer arrays nums1 and nums2, merge nums2 into nums1 as one sorted array.
-
-Note:
-You may assume that nums1 has enough space (size that is greater or equal to m + n) to hold additional elements from nums2. The number of elements initialized in nums1 and nums2 are m and n respectively.
-
-思路：从后往前填
-var merge = function(nums1, m, nums2, n) {
-    var insertIndex = m+n-1;
-    var mIndex = m-1;
-    var nIndex = n-1;
-    while( insertIndex >= 0 && mIndex >= 0 && nIndex >= 0 ){
-        if( nums1[mIndex] > nums2[nIndex] ){
-            nums1[insertIndex] = nums1[mIndex];
-            mIndex--;
-        }else{
-            nums1[insertIndex] = nums2[nIndex];
-            nIndex--;
-        }
-        insertIndex--;
-    }
-    
-    while( mIndex >=0 ){
-      nums1[insertIndex] = nums1[mIndex];
-        mIndex--;
-        insertIndex--;
-    }
-    
-    while( nIndex >=0 ){
-        nums1[insertIndex] = nums2[nIndex];
-        nIndex--;
-        insertIndex--;
-      console.log("c");
-    }
-    return nums1;
-};
-
-merge([1],1,[],0);
-
-
-rotate array:
-Rotate an array of n elements to the right by k steps.
-
-For example, with n = 7 and k = 3, the array [1,2,3,4,5,6,7] is rotated to [5,6,7,1,2,3,4]. 
-/**
- * @param {number[]} nums
- * @param {number} k
- * @return {void} Do not return anything, modify nums in-place instead.
- */
-var rotate = function(nums, k) {
-  for( var i = 0; i < k; i++){
-     nums.unshift( nums.pop() );
-  }
-};
-
-rotate II: 
-var rotate = function(nums, k) {
-  return rev(rev(nums.splice(0,nums.length-k)).concat(rev(nums.splice(nums.length-k,k) )));
-};
-
-function rev(arr){
-    return arr.reverse();
-}
-
-rotate([1,2,3,4,5,6,7],3);
-
-roate II.2:
-var rotate = function(nums, k) {
-  k = k%nums.length;
-  rev(nums,0,nums.length-1);
-  rev(nums,0,k-1);
-  rev(nums,k,nums.length-1);
-};
-
-function rev(arr,start,end){
-  if(start !== end){
-    for(var i = 0; i < Math.floor( (end-start+1)/2 ); i++){
-        var tmp = arr[i+start];
-        arr[i+start] = arr[end-i];
-        arr[end-i] = tmp;
-    }
-  }
-}
-
-
-Length of Last Word:
-Given a string s consists of upper/lower-case alphabets and empty space characters ' ', return the length of last word in the string.
-
-If the last word does not exist, return 0.
-var lengthOfLastWord = function(s) {
-  var count = 0;
-  for( var i = s.length-1; i >=0; i--){
-    if( count !== 0 && s[i] === " ") return count;
-    else if( s[i] !== " ") count++;
-  }
-  return count;
-};
-
-Valid Palindrome
-
-Given a string, determine if it is a palindrome, considering only alphanumeric characters and ignoring cases.
-
-For example,
-"A man, a plan, a canal: Panama" is a palindrome.
-"race a car" is not a palindrome. 
-
-/**
- * @param {string} s
- * @return {boolean}
- */
-var isPalindrome = function(s) {
-    if( s === "" ) return true;
-    var filterString = s.toLowerCase().replace(/[^A-Za-z0-9]/g,"");
-    return filterString.split("").reverse().join("") === filterString;
-};
 
 
 compare version numbers
@@ -2590,26 +2344,6 @@ var summaryRanges = function(nums) {
     return range;
 };
 
-Pascal's Triangle II
-Given an index k, return the kth row of the Pascal's triangle.
-For example, given k = 3,
-Return [1,3,3,1]. 
-/**
- * @param {number} rowIndex
- * @return {number[]}
- */
-var getRow = function(rowIndex) {
-    if( rowIndex === 0 ) return [1];
-    var result = [1,1];
-    for( var i = 2; i <= rowIndex ; i++ ){
-        result.push(1);
-        for( var j = i-1; j > 0 ; j-- ){
-            result[j] = result[j]+ result[j-1];
-        }
-    }
-    return result;
-};
-
 
 Path Sum
  Given a binary tree and a sum, determine if the tree has a root-to-leaf path such that adding up all the values along the path equals the given sum.
@@ -2647,89 +2381,11 @@ var hasPathSum = function(root, sum) {
     return (hasPathSum(root.left, sum-root.val) || hasPathSum(root.right, sum-root.val));
 }; 
 
-Min Stack
-/**
- * @constructor
- */
-var MinStack = function() {
-    this.mStack = [];
-};
-
-/**
- * @param {number} x
- * @returns {void}
- */
-MinStack.prototype.push = function(x) {
-    this.mStack.push(x);
-};
-
-/**
- * @returns {void}
- */
-MinStack.prototype.pop = function() {
-    this.mStack.pop();
-};
-
-/**
- * @returns {number}
- */
-MinStack.prototype.top = function() {
-    return this.mStack[this.mStack.length-1];
-};
-
-/**
- * @returns {number}
- */
-MinStack.prototype.getMin = function() {
-    var minVal = this.mStack[0];
-    for( var i = 1; i < this.mStack.length; i++){
-        minVal = minVal >= this.mStack[i] ? this.mStack[i] : minVal;
-    }
-    return minVal;
-};
 
 
-Palindrome Linked List
-Given a singly linked list, determine if it is a palindrome.
 
-/**
- * Definition for singly-linked list.
- * function ListNode(val) {
- *     this.val = val;
- *     this.next = null;
- * }
- */
-/**
- * @param {ListNode} head
- * @return {boolean}
- */
-var isPalindrome = function(head) {
-    
-    if( head === null || head.next === null ) return true;
-    
-    var slow = head, fast = head, cacheHead = head;
-    while( fast !== null && fast.next !== null ){
-        slow = slow.next;
-        fast = fast.next.next;
-    }
-    
-    var rev = new ListNode("head"),tmp;
-    while( slow !== null ){
-        tmp = slow;
-        slow = slow.next;
-        tmp.next = rev.next;
-        rev.next = tmp;
-    }
-    
-    var ori = cacheHead, compare = rev.next;
-    while( ori !== null && ori.next !== null){
-        if( ori.val !== compare.val) return false;
-        ori = ori.next;
-        compare = compare.next;
-    }
-    
-    return true;
-};
+
+
 
 Binary Tree Level Order Traversal II
 
@@ -2843,42 +2499,6 @@ Stack.prototype.empty = function() {
     return !this.queue.length;
 };
 
-Excel Sheet Column Title
-Given a positive integer, return its corresponding column title as appear in an Excel sheet.
-For example:
-
-    1 -> A
-    2 -> B
-    3 -> C
-    ...
-    26 -> Z
-    27 -> AA
-    28 -> AB 
-/**
- * @param {number} n
- * @return {string}
- */
-var convertToTitle = function(n) {
-    if( n <= 0 ) return false;
-    if( n <= 26 ) return String.fromCharCode(n+64);
-    
-    var result = ""; 
-    while( Math.floor(n/26) !== 0 ){
-        var firstBit = 0;
-        if(n%26 === 0){
-            firstBit = 26;
-            n -= 26;
-        }else{
-            firstBit = n%26;
-        }
-        result += String.fromCharCode(firstBit+64);
-        n = Math.floor(n/26);
-    }
-    if( n !== 0 ) result += String.fromCharCode(n+64);
-    
-    return result.split("").reverse().join("");
-};
-
 
 House Robber
 You are a professional robber planning to rob houses along a street. Each house has a certain amount of money stashed, the only constraint stopping you from robbing each of them is that adjacent houses have security system connected and it will automatically contact the police if two adjacent houses were broken into on the same night.
@@ -2900,155 +2520,6 @@ var rob = function(nums) {
 };
 
 
-Factorial Trailing Zeroes
-考虑n!的质数因子。后缀0总是由质因子2和质因子5相乘得来的。如果我们可以计数2和5的个数，问题就解决了。考虑下面的例子：
-n = 5: 5!的质因子中 (2 * 2 * 2 * 3 * 5)包含一个5和三个2。因而后缀0的个数是1。
-n = 11: 11!的质因子中(2^8 * 3^4 * 5^2 * 7)包含两个5和三个2。于是后缀0的个数就是2。
-我们很容易观察到质因子中2的个数总是大于等于5的个数。因此只要计数5的个数就可以了。那么怎样计算n!的质因子中所有5的个数呢？一个简单的方法是计算floor(n/5)。例如，7!有一个5，10!有两个5。除此之外，还有一件事情要考虑。诸如25，125之类的数字有不止一个5。例如，如果我们考虑28!，我们得到一个额外的5，并且0的总数变成了6。处理这个问题也很简单，首先对n÷5，移除所有的单个5，然后÷25，移除额外的5，以此类推。下面是归纳出的计算后缀0的公式。
-n!后缀0的个数 = n!质因子中5的个数
-              = floor(n/5) + floor(n/25) + floor(n/125) + ....
-
-Given an integer n, return the number of trailing zeroes in n!.
-var trailingZeroes = function(n) {
-    var result = 0;
-    var m = 5;
-    while( n >= m ){
-        result += Math.floor( n/m );
-        m *= 5;
-    }
-    return result;
-};
-
-
-Isomorphic Strings
-
-Given two strings s and t, determine if they are isomorphic.
-
-Two strings are isomorphic if the characters in s can be replaced to get t.
-
-All occurrences of a character must be replaced with another character while preserving the order of characters. No two characters may map to the same character but a character may map to itself.
-
-For example,
-Given "egg", "add", return true.
-
-Given "foo", "bar", return false.
-
-Given "paper", "title", return true.
-/**
- * @param {string} s
- * @param {string} t
- * @return {boolean}
- */
-var isIsomorphic = function(s, t) {
-  var sA = s.split("");
-  var tA = t.split("");
-  var hashMap = [], hashMap2 = [];
-  for( var i = 0, j = sA.length; i < j; i++ ){
-    var sAPop = sA.pop();
-    var tAPop = tA.pop();
-    if( hashMap[sAPop] === undefined ){
-        hashMap[sAPop] = tAPop;
-    }else{
-        if( hashMap[sAPop] !== tAPop ) return false;    
-    }
-    
-    if( hashMap2[tAPop] === undefined){
-        hashMap2[tAPop] = sAPop;
-    }else{
-       if( hashMap2[tAPop] !== sAPop ) return false;
-    }
-    
-  }
-  return true;
-};
-
-
-Add Binary
-Given two binary strings, return their sum (also a binary string).
-
-For example,
-a = "11"
-b = "1"
-Return "100". 
-/**
- * @param {string} a
- * @param {string} b
- * @return {string}
- */
-var addBinary = function(a, b) {
-    var carry = 0;
-    var sa = a.split("");
-    var sb = b.split("");
-    var result = [];
-    var firstBit, secondBit,ra, rb;
-    while( sa.length && sb.length ){
-        firstBit = sa.pop();
-        secondBit = sb.pop();
-        ra = ( firstBit === secondBit ) ? 0 : 1;
-        rb = ( carry === ra ) ? 0 : 1;
-        if( parseInt(firstBit) + parseInt(secondBit) + carry > 1 ) carry = 1;
-        else carry = 0;
-        result.unshift(rb);
-    }
-    while( sa.length){
-        firstBit = parseInt(sa.pop());
-        ra = ( firstBit === carry ) ? 0 : 1; 
-        if( firstBit && carry ) carry = 1;
-        else carry = 0;
-        result.unshift(ra);
-    }
-    
-    while( sb.length){
-        firstBit = parseInt(sb.pop());
-        rb = ( firstBit === carry ) ? 0 : 1; 
-        if( firstBit && carry ) carry = 1;
-        else carry = 0;
-        result.unshift(rb);
-    }
-    
-    if( carry === 1 ) result.unshift(1);
-    
-    return result.join("");
-};
-
-
-word pattern
-Given a pattern and a string str, find if str follows the same pattern.
-
-Here follow means a full match, such that there is a bijection between a letter in pattern and a non-empty word in str.
-
-Examples:
-
-    pattern = "abba", str = "dog cat cat dog" should return true.
-    pattern = "abba", str = "dog cat cat fish" should return false.
-    pattern = "aaaa", str = "dog cat cat dog" should return false.
-    pattern = "abba", str = "dog dog dog dog" should return false.
-
-Notes:
-You may assume pattern contains only lowercase letters, and str contains lowercase letters separated by a single space. 
-/**
- * @param {string} pattern
- * @param {string} str
- * @return {boolean}
- */
-var wordPattern = function(pattern, str) {
-    var strArray = str.split(" ");
-    if( strArray.length !== pattern.length ) return false;
-    //map
-    var hashMap = [], hashMap2 = [];
-    for( var i = 0; i < strArray.length; i++){
-        if( hashMap[pattern[i]] === undefined ) hashMap[pattern[i]] = strArray[i];
-        else{
-            if( hashMap[pattern[i]] !== strArray[i] ) return false;
-        }
-        
-        if( hashMap2[strArray[i]] === undefined ) hashMap2[strArray[i]] = pattern[i];
-        else{
-            if( hashMap2[strArray[i]] !== pattern[i] ) return false;
-        }
-    }
-    return true;
-};
 
 Range Sum Query - Immutable
 Given an integer array nums, find the sum of the elements between indices i and j (i ≤ j), inclusive.
@@ -3130,42 +2601,11 @@ var longestCommonPrefix = function(strs) {
 };
 
 
-Count and Say
-The count-and-say sequence is the sequence of integers beginning as follows:
-1, 11, 21, 1211, 111221, ...
-
 1 is read off as "one 1" or 11.
 11 is read off as "two 1s" or 21.
 21 is read off as "one 2, then one 1" or 1211.
 
 Given an integer n, generate the nth sequence. 
-
-/**
- * @param {number} n
- * @return {string}
- */
-var countAndSay = function(n) {
-    if( n === 1) return "1";
-    //if( n === 2) return "11";
-    var result = "1", prev = "1", count = 0;
-    for( var i = 1; i < n; i++ ){
-        var resArray = result.split("");
-        result = "";
-        prev = resArray[0];
-        for( var j = 0; j < resArray.length; j++ ){
-            if( resArray[j] === prev ){
-                count++;
-            }else{
-                result += count.toString()+prev;
-                prev = resArray[j];
-                count = 1;
-            }
-        }
-        result += count.toString()+prev;
-        count = 0;
-    }
-    return result;
-};
 
 Bulls and Cows
 思路： 先遍历secret 创建hash纪录出现次数同时对比guess,记入a，如有配对成功则减去对应出现次数，接着遍历guess，检测b
@@ -3216,122 +2656,6 @@ var getHint = function(secret, guess) {
 };
 
 
-
-Remove Linked List Elements
-Remove all elements from a linked list of integers that have value val.
-Example
-Given: 1 --> 2 --> 6 --> 3 --> 4 --> 5 --> 6, val = 6
-Return: 1 --> 2 --> 3 --> 4 --> 5 
-/**
- * Definition for singly-linked list.
- * function ListNode(val) {
- *     this.val = val;
- *     this.next = null;
- * }
- */
-/**
- * @param {ListNode} head
- * @param {number} val
- * @return {ListNode}
- */
-var removeElements = function(head, val) {
-    if( head === null ) return [];
-    var prev = null;
-    if( head.val === val ) head = head.next;
-    var node = head;
-    while( node !== null ){
-        if( node.val !== val ){
-            prev = node;
-        }else{
-            if( prev !== null ) prev.next = node.next;
-            else head = head.next;
-        }
-        node = node.next;
-    }
-    
-    return head;
-};
-
-Intersection of Two Linked Lists
-思路： 长度相差
-Write a program to find the node at which the intersection of two singly linked lists begins.
-
-For example, the following two linked lists:
-
-A:          a1 → a2
-                   ↘
-                     c1 → c2 → c3
-                   ↗            
-B:     b1 → b2 → b3
-
-begin to intersect at node c1.
-
-Notes:
-
-    If the two linked lists have no intersection at all, return null.
-    The linked lists must retain their original structure after the function returns.
-    You may assume there are no cycles anywhere in the entire linked structure.
-    Your code should preferably run in O(n) time and use only O(1) memory.
-
-/**
- * Definition for singly-linked list.
- * function ListNode(val) {
- *     this.val = val;
- *     this.next = null;
- * }
- */
-
-/**
- * @param {ListNode} headA
- * @param {ListNode} headB
- * @return {ListNode}
- */
-var getIntersectionNode = function(headA, headB) {
-    if( headA === null || headB === null ) return null;
-    
-    var al = getLength(headA);
-    var bl = getLength(headB);
-    var cur;
-    var gap = al - bl;
-    if( gap > 0 ){
-        cur = headA;
-        while( gap > 0 ){
-            cur = cur.next;
-            gap--;
-        }
-        
-        while( cur !== null ){
-            if( cur.val === headB.val ) return cur;
-            cur =  cur.next;
-            headB = headB.next;
-        }
-        
-    }else{
-        cur = headB;
-        while( gap < 0){
-            cur = cur.next;
-            gap++;
-        }
-        
-        while( cur !== null ){
-            if( cur.val === headA.val ) return cur;
-            cur = cur.next;
-            headA = headA.next;
-        }
-    }
-    
-    return null;
-    
-};
-
-var getLength = function(node){
-   var length = 0;
-   while( node !== null ){
-       node = node.next;
-       length++;
-   }
-    return length;
-};
 
 
 String to Integer (atoi)
@@ -3436,60 +2760,12 @@ var levelOrder = function(root) {
 };
 
 
-Minimum Depth of Binary Tree
-思路： 该树为一个空树，则其最小深度为0；
-2. 该树不为空且其左右子树都不为空，则最小深度为左子树最小深度和右子树最小深度中较小的那一个+1；
-3. 该树不为空，但是其左子树为空，右子树不为空，则最小深度为右子树的最小深度+1；
-4. 该树不为空，但是其左子树不为空，右子树为空，则最小深度为左子树的最小深度+1；
-5. 该树不为空，但是其左子树和右子树都为空，则最小深度为1；
-
-Given a binary tree, find its minimum depth.
-/**
- * Definition for a binary tree node.
- * function TreeNode(val) {
- *     this.val = val;
- *     this.left = this.right = null;
- * }
- */
-/**
- * @param {TreeNode} root
- * @return {number}
- */
-var minDepth = function(root) {
-  var count = 1;
-  if( root === null ) return 0;
-  if( root.left === null && root.right === null ) return count;
-  if( root.left !== null && root.right === null ) count += minDepth(root.left);
-  if( root.right !== null && root.left === null ) count += minDepth(root.right);
-  if( root.right !== null && root.left !== null ) count += Math.min(minDepth(root.left),minDepth(root.right));
-  return count
-};
-
-
 
 Reverse Bit
 Reverse bits of a given 32 bits unsigned integer.
 
 For example, given input 43261596 (represented in binary as 00000010100101000001111010011100), return 964176192 (represented in binary as 00111001011110000010100101000000).
 
-/**
- * @param {number} n - a positive integer
- * @return {number} - a positive integer
- */
-var reverseBits = function(n) {
-    if(n > 4294967294) return n;
-    var res = 0;
-    var sign = n & 1;
-    n >>= 1;
-    for( var i = 0; i < 31; i++){
-        res <<= 1;
-        res = res | ( n & 1 );
-        n >>= 1;
-    }
-    
-    if( sign === 1 ) res += 2147483648;
-    return res;
-};
 
 Single Number
 Given an array of integers, every element appears twice except for one. Find that single one.
@@ -3621,27 +2897,6 @@ var sortColors = function(nums) {
   }
 };
 
-
-sqrt(x)
-思路： 牛顿迭代法
-xi+1 ＝ (xi + n/xi) / 2。
-last和res之间的差值要小于1
-/**
- * @param {number} x
- * @return {number}
- */
-var mySqrt = function(x) {
-    if( x === 0 ) return 0;
-    var res = 1, last = 0;
-    
-    while( Math.abs(last - res) >= 1 ){
-        last = res;
-        res = (last+ x/last)/2;
-    }
-    
-    return Math.floor(res);
-    
-};
 
 Rotate Image
 顺时针旋转90度
@@ -4424,34 +3679,6 @@ var postorderTraversal = function(root) {
 
 
 
-Linked List Cycle
-Given a linked list, determine if it has a cycle in it.
-思路： 双指针方法
-/**
- * Definition for singly-linked list.
- * function ListNode(val) {
- *     this.val = val;
- *     this.next = null;
- * }
- */
-
-/**
- * @param {ListNode} head
- * @return {boolean}
- */
-var hasCycle = function(head) {
-    if( !head ) return false;
-    var fastPoint = head;
-    var slowPoint = head;
-    
-    do{
-        if( fastPoint.next !== null && fastPoint.next.next !== null ) fastPoint = fastPoint.next.next;
-        else return false;
-        slowPoint = slowPoint.next;
-    }while( fastPoint !== slowPoint );
-    
-    return true;
-};
 
 Linked List Cycle II
 
